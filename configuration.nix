@@ -32,8 +32,19 @@
       };
     };
 
-    plymouth.enable = true; # Enable the Plymouth screen.
-    kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel.
+    # Enable the Plymouth screen.
+    plymouth.enable = true;
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "rd.udev.log_level=3"
+      "rd.systemd.show_status=auto"
+    ];
+    loader.timeout = 0;
+
+    # Use latest kernel.
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   # Give me access to the games drive (xbox 720)
@@ -124,6 +135,7 @@
       discord
       helium
       prismlauncher
+      zed-editor-fhs
     ];
 
     # Use fish shell instead of bash.
@@ -160,7 +172,6 @@
   # Programs.
   programs = {
     steam.enable = true;
-    vscode.enable = true;
     fish.enable = true;
     git = {
       enable = true;

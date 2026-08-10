@@ -28,7 +28,7 @@
             protocol: efi
             path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
         '';
-        style.wallpapers = [ "/run/media/echolotl/2TB/boot.png" ];
+        style.wallpapers = [ "/mnt/sda3/boot.png" ];
       };
     };
 
@@ -41,7 +41,6 @@
       "rd.udev.log_level=3"
       "rd.systemd.show_status=auto"
     ];
-    loader.timeout = 0;
 
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
@@ -179,6 +178,9 @@
         user.name = "echolotl";
         user.email = "echolotl@echolotl.lol";
         init.defaultBranch = "main";
+        safe.directory = [
+          "/etc/nixos"
+        ];
       };
     };
   };
@@ -193,6 +195,8 @@
     pnpm
     gh
     gcc
+    nil
+    nixd
   ];
 
   # This value determines the NixOS release from which the default

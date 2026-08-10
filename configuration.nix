@@ -181,6 +181,7 @@
     rustup
     pnpm
     gh
+    gcc
   ];
 
   # This value determines the NixOS release from which the default

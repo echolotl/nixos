@@ -14,7 +14,7 @@
       systemd-boot.enable = false;
       limine = {
         enable = true;
-        maxGenerations = 2; # Only keep two generations cuz my EFI partition is too small...
+        maxGenerations = 5;
 
         # Secure boot.
         secureBoot = {
@@ -25,8 +25,8 @@
         # Also put Windows as an option
         extraEntries = ''
           /Windows
-            protocol: efi
-            path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+            protocol: efi_chainload
+            image_path: uuid(02e00865-fa42-4e81-915a-830f1557a858):/EFI/Microsoft/Boot/bootmgfw.efi
         '';
         style.wallpapers = [ "/mnt/sda3/boot.png" ];
       };
@@ -51,6 +51,7 @@
     device = "/dev/disk/by-uuid/C0A61990A61987D4";
     fsType = "ntfs3";
     options = [
+      "nofail"
       "uid=1000"
     ];
   };

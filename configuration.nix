@@ -199,7 +199,7 @@
     nil
     nixd
     bibata-cursors
-    wine
+    wineWow64Packages.stable
   ];
 
   # This value determines the NixOS release from which the default

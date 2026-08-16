@@ -28,7 +28,7 @@
             protocol: efi_chainload
             image_path: uuid(02e00865-fa42-4e81-915a-830f1557a858):/EFI/Microsoft/Boot/bootmgfw.efi
         '';
-        style.wallpapers = [ "/mnt/sda3/boot.png" ];
+        style.wallpapers = [ ./wallpapers/boot.png ];
       };
     };
 
@@ -198,6 +198,7 @@
     gcc
     nil
     nixd
+    bibata-cursors
   ];
 
   # This value determines the NixOS release from which the default

@@ -136,6 +136,7 @@
       helium
       prismlauncher
       zed-editor-fhs
+      godot
     ];
 
     # Use fish shell instead of bash.

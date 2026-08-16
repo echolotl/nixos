@@ -199,6 +199,7 @@
     nil
     nixd
     bibata-cursors
+    wine
   ];
 
   # This value determines the NixOS release from which the default

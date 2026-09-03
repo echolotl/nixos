@@ -45,11 +45,6 @@
               useUserPackages = true;
               sharedModules = [plasma-manager.homeModules.plasma-manager];
               users.echolotl = import ./home.nix; # Home Manager configuration actually lives in home.nix.
-              programs.vscodeium = {
-                enable = true;
-
-
-              };
             };
             environment.systemPackages = [
               copilot-cli.packages.${pkgs.system}.default

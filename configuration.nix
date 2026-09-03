@@ -139,7 +139,6 @@
       discord
       helium
       prismlauncher
-      zed-editor-fhs
     ];
 
     # Use fish shell instead of bash.

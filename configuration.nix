@@ -1,9 +1,12 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
 { config, pkgs, lib, ... }:
 
 {
-  # Import the hardware scan.
   imports =
-    [
+    [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -21,7 +24,7 @@
       systemd-boot.enable = false;
       limine = {
         enable = true;
-        maxGenerations = 5;
+        maxGenerations = 2;
 
         # Secure boot.
         secureBoot = {
@@ -29,17 +32,11 @@
           autoGenerateKeys = true;
         };
 
-        # Also put Windows as an option
-        extraEntries = ''
-          /Windows
-            protocol: efi_chainload
-            image_path: uuid(02e00865-fa42-4e81-915a-830f1557a858):/EFI/Microsoft/Boot/bootmgfw.efi
-        '';
         style.wallpapers = [ ./wallpapers/boot.png ];
       };
     };
 
-    # Enable the Plymouth screen.
+  # Enable the Plymouth screen.
     plymouth.enable = true;
     consoleLogLevel = 3;
     initrd.verbose = false;
@@ -48,27 +45,16 @@
       "rd.udev.log_level=3"
       "rd.systemd.show_status=auto"
     ];
-
-    # Use latest kernel.
-    kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  # Give me access to the games drive (xbox 720)
-  fileSystems."/mnt/sda3" = {
-    device = "/dev/disk/by-uuid/C0A61990A61987D4";
-    fsType = "ntfs3";
-    options = [
-      "nofail"
-      "uid=1000"
-    ];
-  };
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable the `nix` command and flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking = {
-    hostName = "echolotl-nixo";
-    wireless.enable = true; # Enable Wi-Fi
+    hostName = "echolotl-nixt";
 
     networkmanager.enable = true;
   };
@@ -131,14 +117,15 @@
 
   security.rtkit.enable = true; # for Pipewire.
 
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."echolotl" = {
     isNormalUser = true;
     description = "echolotl";
     extraGroups = [ "networkmanager" "wheel" ];
-    # User packages.
     packages = with pkgs; [
       kdePackages.kate
       krita
+      thunderbird
       heroic
       discord
       helium
@@ -160,21 +147,29 @@
   # Documentation is all online anyways and I prefer that to the built-in one.
   documentation.nixos.enable = false;
 
-  # Allow unfree software. (maybe come back to this and only allow specific things through?)
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true; # For Steam, specifically.
-    };
+    graphics.enable = true;
 
     # NVIDIA!!!!!!
     nvidia = {
       modesetting.enable = true;
-      open = false; # ya
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      open = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+      prime = {
+      offload = {
+      enable = true;
+      enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:101:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+      };
     };
 
     # Enable bluetooth. (for passkeys on my phone mostly)
@@ -192,7 +187,6 @@
 
   # Programs.
   programs = {
-    steam.enable = true;
     fish.enable = true;
     git = {
       enable = true;
@@ -230,4 +224,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "26.05"; # Did you read the comment?
+
 }

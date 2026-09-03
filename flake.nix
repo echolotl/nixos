@@ -32,7 +32,7 @@
     }:
     {
 
-      nixosConfigurations."echolotl-nixo" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."echolotl-nixt" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./configuration.nix

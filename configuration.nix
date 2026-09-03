@@ -2,13 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   boot = {
     # Use limine as the boot loader.
@@ -25,11 +30,17 @@
           autoGenerateKeys = true;
         };
 
+        extraEntries = ''
+              /Windows
+          protocol: efi
+          path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+        '';
+
         style.wallpapers = [ ./wallpapers/boot.png ];
       };
     };
 
-  # Enable the Plymouth screen.
+    # Enable the Plymouth screen.
     plymouth.enable = true;
     consoleLogLevel = 3;
     initrd.verbose = false;
@@ -44,7 +55,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable the `nix` command and flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking = {
     hostName = "echolotl-nixt";
@@ -114,7 +128,10 @@
   users.users."echolotl" = {
     isNormalUser = true;
     description = "echolotl";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
@@ -148,12 +165,12 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       prime = {
-      offload = {
-      enable = true;
-      enableOffloadCmd = true;
-      };
-      amdgpuBusId = "PCI:101:0:0";
-      nvidiaBusId = "PCI:1:0:0";
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+        amdgpuBusId = "PCI:101:0:0";
+        nvidiaBusId = "PCI:1:0:0";
       };
     };
 

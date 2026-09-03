@@ -147,7 +147,6 @@
       discord
       helium
       prismlauncher
-      zed-editor-fhs
       godot
     ];
 

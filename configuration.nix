@@ -230,6 +230,7 @@
     nil
     nixd
     bibata-cursors
+    clang-tools
     wineWow64Packages.stable
   ];
 

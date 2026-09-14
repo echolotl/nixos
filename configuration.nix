@@ -215,6 +215,10 @@
         ];
       };
     };
+    vscode = {
+      enable = true;
+      package = pkgs.vscode.fhs;
+    };
   };
 
   # Global system packages.
@@ -232,6 +236,7 @@
     bibata-cursors
     clang-tools
     wineWow64Packages.stable
+    vscode.fhs
   ];
 
   # This value determines the NixOS release from which the default

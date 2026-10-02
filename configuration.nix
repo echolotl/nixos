@@ -216,6 +216,8 @@
     clang-tools
     wineWow64Packages.stable
     vscode.fhs
+    python3
+    nodejs
   ];
 
   # This value determines the NixOS release from which the default

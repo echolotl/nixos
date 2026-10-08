@@ -1,7 +1,11 @@
-# Home Manager configuration for KDE Plasma using Plasma Manager
-# ...lots of managing happening
 { ... }:
 
+let
+  font = {
+    family = "IBM Plex Sans";
+    pointSize = 10;
+  };
+in
 {
   programs.plasma = {
     enable = true;
@@ -17,6 +21,21 @@
     configFile = {
       kdeglobals.General.AccentColor = "233,58,154";
       kdeglobals.KDE.widgetStyle = "Union";
+    };
+    fonts = {
+      general = font;
+      menu = font;
+      toolbar = font;
+      windowTitle = font;
+
+      fixedWidth = {
+        family = "Google Sans Code";
+        pointSize = 10;
+      };
+      small = {
+        family = "IBM Plex Sans";
+        pointSize = 8;
+      };
     };
   };
 }

@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     helium.url = "github:schembriaiden/helium-browser-nix-flake";
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
+    spotifast.url = "github:crmne/spotifast";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,6 +27,7 @@
       copilot-cli,
       home-manager,
       plasma-manager,
+      spotifast,
       ...
     }:
     {
@@ -35,6 +37,7 @@
         modules = [
           ./configuration.nix
           home-manager.nixosModules.home-manager
+          ({ pkgs, ... }:
           {
             nixpkgs.overlays = [ helium.overlays.default ];
             home-manager = {
@@ -44,9 +47,10 @@
               users.echolotl = import ./home.nix; # Home Manager configuration actually lives in home.nix.
             };
             environment.systemPackages = [
-              copilot-cli.packages.x86_64-linux.default
+              copilot-cli.packages.${pkgs.system}.default
+              spotifast.packages.${pkgs.system}.default
             ];
-          }
+          })
         ];
       };
 

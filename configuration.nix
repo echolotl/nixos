@@ -8,6 +8,13 @@
     ];
 
   boot = {
+  supportedFilesystems = [ "ntfs" ];
+  kernelModules = [ "uinput" ];
+
+  extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
+    extraModprobeConfig = ''
+      options bluetooth disable_ertm=Y
+    '';
     # Use limine as the boot loader.
     loader = {
       efi.canTouchEfiVariables = true;
@@ -131,6 +138,7 @@
     # User packages.
     packages = with pkgs; [
       kdePackages.kate
+      krita
       heroic
       discord
       helium
@@ -142,6 +150,12 @@
     # Use fish shell instead of bash.
     shell = pkgs.fish;
   };
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    googlesans-code
+    ibm-plex
+  ];
 
   # Documentation is all online anyways and I prefer that to the built-in one.
   documentation.nixos.enable = false;
@@ -168,6 +182,12 @@
       enable = true;
       powerOnBoot = true;
     };
+
+    xpadneo.enable = true; # for my controller
+
+    # OpenTabletDriver (for my drawing tablet)
+    opentabletdriver.enable = true;
+    uinput.enable = true;
   };
 
   # Programs.

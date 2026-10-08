@@ -141,13 +141,11 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
-      krita
       thunderbird
       heroic
       discord
       helium
       prismlauncher
-      godot
     ];
 
     # Use fish shell instead of bash.
@@ -196,8 +194,6 @@
 
     xpadneo.enable = true; # for my controller
 
-    # OpenTabletDriver (for my drawing tablet)
-    opentabletdriver.enable = true;
     uinput.enable = true;
   };
 

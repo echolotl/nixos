@@ -120,6 +120,7 @@
     };
 
     # Enable Tailscale.
+    # REMEMBER TO LOGIN AFTER
     tailscale = {
       enable = true;
       useRoutingFeatures = "client";
@@ -142,10 +143,13 @@
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
-      heroic
       discord
-      helium
+      helium # my favorite.. see ./flake.nix
+
+      # Gamesing
       prismlauncher
+      heroic
+      steam
     ];
 
     # Use fish shell instead of bash.
@@ -156,6 +160,7 @@
   fonts.packages = with pkgs; [
     googlesans-code
     ibm-plex
+    corefonts
   ];
 
   # Documentation is all online anyways and I prefer that to the built-in one.
@@ -219,22 +224,35 @@
 
   # Global system packages.
   environment.systemPackages = with pkgs; [
-    haxe
-    sbctl
+    sbctl # for Secure Boot
+
+    # Dev adjacent stuff
+    nodejs
+    pnpm
+    gh
+    python3
+    vscode.fhs
+    haxe # for Friday Night Funkin...
+
+    # C language
+    gcc
+    clang-tools
+    # Nix language
+    nil
+    nixd
+    # Rust language
     rustc
     cargo
     rustup
-    pnpm
-    gh
-    gcc
-    nil
-    nixd
-    bibata-cursors
-    clang-tools
-    wineWow64Packages.stable
-    vscode.fhs
-    python3
-    nodejs
+
+    # LibreOffice
+    libreoffice-qt-stable
+    hunspell
+    hunspellDicts.en_US
+
+    # Miscillaneous
+    bibata-cursors # cursors :)
+    wineWow64Packages.stable # wine :)
   ];
 
   # This value determines the NixOS release from which the default
